@@ -42,27 +42,27 @@ const Login = () => {
     function handleSubmitLogin(e) {
         e.preventDefault();
         //chay doan code nay neu chua viet api spring boot
-        // if (email == "thanhvu123@gmail.com" && password == "thanhvu") {
-        //     login();
-        // } else {
-        //     setMess("Email or password is incorrect");
-        // }
-        let data={};
+        if (email == "thanhvu123@gmail.com" && password == "thanhvu") {
+            login();
+        } else {
+            setMess("Email or password is incorrect");
+        }
+        // let data={};
         
-        axios.post("http://localhost:8081/api/login/signin", {
-            email: email,
-            password: password,
-        }).then((res) => {
-            data = res.data;
-            if (data.status == false) {
-                console.log(data.message);
-                setMess(data.message);
-            } else {
-                login();
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+        // axios.post("http://localhost:8081/api/login/signin", {
+        //     email: email,
+        //     password: password,
+        // }).then((res) => {
+        //     data = res.data;
+        //     if (data.status == false) {
+        //         console.log(data.message);
+        //         setMess(data.message);
+        //     } else {
+        //         login();
+        //     }
+        // }).catch((err) => {
+        //     console.log(err);
+        // })
 
     }
 

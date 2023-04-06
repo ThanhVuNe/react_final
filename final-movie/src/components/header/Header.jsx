@@ -20,6 +20,10 @@ const headerNav = [
     display: "TV Series",
     path: `/tv`,
   },
+  {
+    display: "Top 50 movies",
+    path: `/top50`,
+  }
 ];
 
 const Header = () => {
@@ -86,15 +90,15 @@ const Header = () => {
             <div class="dropdown-content">
               <div className="dropdown-content-flex">
                 {items.map((item, index) => (
-                  <a href="#" key={index}>{item.name}</a>
+                  <Link to={"/genres/"+item.name+"/"+item.id} key={index}>{item.name}</Link>
                 ))}
               </div>
             </div>
           </li>
           {headerNav.map((e, i) => (
             <li key={i} className={`${i === active ? "active" : ""}`}>
-              {/* <Link to={e.path}>{e.display}</Link> */}
-              <a className={`${i === active ? "active" : ""}`} href="#">{e.display}</a>
+              <Link to={e.path}>{e.display}</Link>
+              {/* <a className={`${i === active ? "active" : ""}`} href="#">{e.display}</a> */}
             </li>
           ))}
 
