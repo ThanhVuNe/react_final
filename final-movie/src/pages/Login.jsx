@@ -4,12 +4,19 @@ import "./login.css";
 
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import springApi from "../api/springApi";
 const Login = () => {
     let [dataLogin, setDataLogin] = useState({});
     let history = useHistory();
-    function login() {
-        localStorage.setItem("token", true);
+    function login(email) {
+        const resp = springApi.getAccountByEmail(email);
+        resp.then((res) => {
+            console.log(res);
+            // setDataLogin(res);
+            localStorage.setItem("token", JSON.stringify(res));
+        });
         history.replace("/");
+        window.location.reload();
     }
 
     //use state for input emain
@@ -42,27 +49,28 @@ const Login = () => {
     function handleSubmitLogin(e) {
         e.preventDefault();
         //chay doan code nay neu chua viet api spring boot
-        if (email == "thanhvu123@gmail.com" && password == "thanhvu") {
-            login();
-        } else {
-            setMess("Email or password is incorrect");
-        }
-        // let data={};
+        // if (email == "thanhvu123@gmail.com" && password == "thanhvu") {
+        //     login();
+        // } else {
+        //     setMess("Email or password is incorrect");
+        // }
+        let data={};
         
-        // axios.post("http://localhost:8081/api/login/signin", {
-        //     email: email,
-        //     password: password,
-        // }).then((res) => {
-        //     data = res.data;
-        //     if (data.status == false) {
-        //         console.log(data.message);
-        //         setMess(data.message);
-        //     } else {
-        //         login();
-        //     }
-        // }).catch((err) => {
-        //     console.log(err);
-        // })
+        axios.post("http://localhost:8080/api/login/signin", {
+            email: email,
+            password: password,
+        }).then((res) => {
+            data = res.data;
+            if (data.status == false) {
+                console.log(data.message);
+                setMess(data.message);
+            } else {
+                login(email);
+
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
 
     }
 
@@ -75,7 +83,7 @@ const Login = () => {
             setMessS("Password and repassword is not match");
         }
         else{
-            axios.post("http://localhost:8081/api/login/signup", {
+            axios.post("http://localhost:8080/api/login/signup", {
                 email: emailS,
                 password: passwordS,
             }).then((res) => {
@@ -85,7 +93,7 @@ const Login = () => {
                     // console.log(data.message);
                     setMessS("Email is already exits");
                 } else {
-                    login();
+                    login(emailS);
                 }
             }).catch((err) => {
                 console.log(err);

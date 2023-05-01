@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import tmdbApi from "../../api/tmdbApi";
 import "./header.scss";
+import springApi from "../../api/springApi";
 
 // import logo from "./../../assets/logo.png";
 
@@ -68,9 +69,14 @@ const Header = () => {
   useEffect(() => {
     const getGenresList = async () => {
       let response = null;
-      const params = {};
-      response = await tmdbApi.getGenres({ params });
-      setItems(response.genres);
+      // const params = {};
+      // response = await tmdbApi.getGenres({ params });
+      // setItems(response.genres);
+      response = springApi.getAllCategory();
+      response.then((res) => {
+        console.log(res);
+        setItems(res);
+      });
 
     };
     getGenresList();
@@ -83,24 +89,30 @@ const Header = () => {
           {/* <Link to={`/`}>POL</Link> */}
           <a href="">POL</a>
         </div>
-
+        
         <ul className="header__nav">
+          <li>
+            <Link to={`/`}>Home</Link>
+          </li>
           <li key={3} className="dropdown">
-            <a href="#" class="dropbtn">Genres</a>
+            <a href="#" class="dropbtn">Category</a>
             <div class="dropdown-content">
               <div className="dropdown-content-flex">
                 {items.map((item, index) => (
-                  <Link to={"/genres/"+item.name+"/"+item.id} key={index}>{item.name}</Link>
+                  <Link to={"/category/" + item.name + "/" + item.id} key={index}>{item.name}</Link>
                 ))}
               </div>
             </div>
           </li>
-          {headerNav.map((e, i) => (
+          {/* {headerNav.map((e, i) => (
             <li key={i} className={`${i === active ? "active" : ""}`}>
               <Link to={e.path}>{e.display}</Link>
-              {/* <a className={`${i === active ? "active" : ""}`} href="#">{e.display}</a> */}
+              <a className={`${i === active ? "active" : ""}`} href="#">{e.display}</a>
             </li>
-          ))}
+          ))} */}
+          <li>
+            <Link to={`/movie`}>Movies</Link>
+          </li>
 
           <li>
             <a href="" onClick={logout}>Log Out</a>

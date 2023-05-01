@@ -1,5 +1,4 @@
 import "swiper/swiper.min.css";
-// import "./assets/boxicons-2.0.7/css/boxicons.min.css";
 import "./App.scss";
 
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
@@ -11,7 +10,8 @@ import Login from "./pages/Login";
 import Detail from "./pages/Detail";
 import Catalog from "./pages/Catalog";
 import GenreMovies from "./pages/GenreMovies";
-// import Routes from "./routes/Routes";
+import Watch from "./pages/Watch";
+
 
 function App() {
   return (
@@ -37,12 +37,13 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route
-                  path={`/:category/search/:keyword`}
+                  path={`/movie/search/:keyword`}
                   component={Catalog}
                 />
-                <Route path="/genres/:name/:id" component={GenreMovies} />
-                <Route path="/:category/:id" component={Detail} />
-                <Route path="/:category" component={Catalog} />
+                <Route path="/category/:name/:id" component={GenreMovies} />
+                <Route path="/movie/:id" component={Detail} />
+                <Route path="/movie" component={Catalog} />
+                <Route path="/watch/:link" component={Watch} />
               </Switch>
 
               <Footer />
